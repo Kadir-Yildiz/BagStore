@@ -17,5 +17,8 @@
 /ApplicationCore
 Install-Package Ardalis.Specification
 
+/Infrastructure
+Install-Package Microsoft.EntityFrameworkCore
+
 ```
 
