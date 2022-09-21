@@ -19,6 +19,6 @@ Install-Package Ardalis.Specification
 
 /Infrastructure
 Install-Package Microsoft.EntityFrameworkCore
-
+Install-Package Microsoft.AspNetCore.Identity.EntityFrameworkCore
 ```
 
