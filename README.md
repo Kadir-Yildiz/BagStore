@@ -20,6 +20,8 @@ Install-Package Ardalis.Specification
 /Infrastructure
 Install-Package Microsoft.EntityFrameworkCore
 Install-Package Microsoft.AspNetCore.Identity.EntityFrameworkCore
+Install-Package Npgsql.EntityFrameworkCore.PostgreSQL
+Install-Package Ardalis.Specification.EntityFrameworkCore
 
 /Web
 Install-Package Npgsql.EntityFrameworkCore.PostgreSQL
@@ -37,3 +39,5 @@ Update-Database -context BagStoreContext
 
 
 ```
+## Useful Links
+* https://github.com/dotnet-architecture/eShopOnWeb
