@@ -17,9 +17,13 @@ namespace Web.Services
         }
         public async Task<HomeViewModel> GetHomeViewModel(int? categoryId, int? brandId, int pageId)
         {
+            var ipp = Constants.ITEMS_PER_PAGE;
             var specFilter = new ProductsFilterSpesification(categoryId, brandId);
-            var products = await _productRepo.GetAllAsync(specFilter);
+            var specPaginatedFilter = new ProductsFilterSpesification(categoryId, brandId, (pageId - 1)* ipp, ipp);
+            var products = await _productRepo.GetAllAsync(specPaginatedFilter);
+            var totalItems = await _productRepo.CountAsync(specFilter);
             var vm = new HomeViewModel();
+            vm.PaginationInfo = new PaginationInfoViewModel(pageId, products.Count, totalItems);
             vm.CategoryId = categoryId;
             vm.BrandId = brandId;
             vm.Products = products.Select(x=> new ProductViewModel
