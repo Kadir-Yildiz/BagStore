@@ -15,7 +15,7 @@ namespace Web.Services
             _categoryRepo = categoryRepo;
             _brandRepo = brandRepo;
         }
-        public async Task<HomeViewModel> GetHomeViewModel(int? categoryId, int? brandId)
+        public async Task<HomeViewModel> GetHomeViewModel(int? categoryId, int? brandId, int pageId)
         {
             var specFilter = new ProductsFilterSpesification(categoryId, brandId);
             var products = await _productRepo.GetAllAsync(specFilter);
