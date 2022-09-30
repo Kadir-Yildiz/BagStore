@@ -80,5 +80,21 @@ namespace ApplicationCore.Services
 
             return basket;
         }
+
+        public async Task<Basket> SetQuantities(string buyerId, Dictionary<int, int> quantities)
+        {
+            var basket = await GetOrCreateBasketAsync(buyerId);
+
+            foreach (var item in basket.Items)
+            {
+                if (quantities.ContainsKey(item.ProductId))
+                {
+                    item.Quantity = quantities[item.ProductId];
+                    await _basketItemRepo.UpdateAsync(item);
+                }
+            }
+
+            return basket;
+        }
     }
 }
