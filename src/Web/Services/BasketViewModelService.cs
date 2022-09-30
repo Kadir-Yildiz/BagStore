@@ -52,5 +52,10 @@ namespace Web.Services
         {
             await _basketService.EmptyBasketAsync(BuyerId);
         }
+
+        public async Task RemoveBasketItemAysnc( int productId)
+        {
+            await _basketService.DeleteBasketItemAsync(BuyerId, productId);
+        }
     }
 }

@@ -45,15 +45,19 @@ namespace ApplicationCore.Services
 
             return basket;
         }
+
+        public async Task DeleteBasketItemAsync(string buyerId, int productId)
+        {
+            var basket = await GetOrCreateBasketAsync(buyerId);
+            var basketItem = basket.Items.FirstOrDefault(x => x.ProductId == productId);
+            if (basketItem == null) return;
+            await _basketItemRepo.DeleteAsync(basketItem);
+        }
+
         public async Task EmptyBasketAsync(string buyerId)
         {
-            var specBasket = new BasketWithItemsSpecification(buyerId);
-            var basket = await _basketRepo.FirstOrDefaultAsync(specBasket);
-
-            if (basket == null || basket.Items.Count==0)
-            {
-                return;
-            }
+            var basket = await GetOrCreateBasketAsync(buyerId);
+            
             foreach (var item in basket.Items.ToList())
             {
                 await _basketItemRepo.DeleteAsync(item);

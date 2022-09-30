@@ -23,13 +23,21 @@ namespace Web.Controllers
 
             return Json(basketViewModel);
         }
-        [HttpPost]
+        [HttpPost, ValidateAntiForgeryToken]
         public async Task<IActionResult> EmptyBasket()
         {
             await _basketViewModelService.EmptyBasketAsync();
             TempData["SuccessMessage"] = "Items removed from the basket.";
 
            return RedirectToAction(nameof(Index));
+        }
+        [HttpPost, ValidateAntiForgeryToken]
+        public async Task<IActionResult> RemoveBasketItem(int productId)
+        {
+            await _basketViewModelService.RemoveBasketItemAysnc(productId);
+            TempData["SuccessMessage"] = "Item removed from the basket.";
+
+            return RedirectToAction(nameof(Index));
         }
     }
 }
