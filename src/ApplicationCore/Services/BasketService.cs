@@ -13,11 +13,13 @@ namespace ApplicationCore.Services
     {
         private readonly IRepository<Basket> _basketRepo;
         private readonly IRepository<Product> _productRepo;
+        private readonly IRepository<BasketItem> _basketItemRepo;
 
-        public BasketService(IRepository<Basket> basketRepo, IRepository<Product> productRepo)
+        public BasketService(IRepository<Basket> basketRepo, IRepository<Product> productRepo, IRepository<BasketItem> basketItemRepo)
         {
             _basketRepo = basketRepo;
             _productRepo = productRepo;
+            _basketItemRepo = basketItemRepo;
         }
 
         public async Task<Basket> AddItemToBasketAsync(string buyerId, int productId, int quantity)
@@ -43,6 +45,23 @@ namespace ApplicationCore.Services
 
             return basket;
         }
+        public async Task EmptyBasketAsync(string buyerId)
+        {
+            var specBasket = new BasketWithItemsSpecification(buyerId);
+            var basket = await _basketRepo.FirstOrDefaultAsync(specBasket);
+
+            if (basket == null || basket.Items.Count==0)
+            {
+                return;
+            }
+            foreach (var item in basket.Items.ToList())
+            {
+                await _basketItemRepo.DeleteAsync(item);
+            }
+
+            
+        }
+
 
         public async Task<Basket> GetOrCreateBasketAsync(string buyerId)
         {

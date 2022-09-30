@@ -23,5 +23,13 @@ namespace Web.Controllers
 
             return Json(basketViewModel);
         }
+        [HttpPost]
+        public async Task<IActionResult> EmptyBasket()
+        {
+            await _basketViewModelService.EmptyBasketAsync();
+            TempData["SuccessMessage"] = "Items removed from the basket.";
+
+           return RedirectToAction(nameof(Index));
+        }
     }
 }
