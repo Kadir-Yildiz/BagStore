@@ -66,10 +66,11 @@ namespace Web.Services
 
         public async Task TransferBasketAsync()
         {
-            await _basketService.TransferBasketAsync(AnonId!, UserId!);
-
             if (AnonId != null && UserId != null)
+            {
+                await _basketService.TransferBasketAsync(AnonId!, UserId!);
                 HttpContext?.Response.Cookies.Delete(Constants.BASKET_COOKIENAME);
+            }
         }
     }
 }
