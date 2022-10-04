@@ -4,7 +4,7 @@ namespace Web.Models
 {
     public class CheckoutViewModel
     {
-        public BasketViewModel Basket { get; set; }
+        public BasketViewModel? Basket { get; set; } = null!;
         [Required, MaxLength(180)]
         [Display(Name ="Street")]
         public string? Street { get; set; }
@@ -26,10 +26,10 @@ namespace Web.Models
         [Required, CreditCard]
         [Display(Name = "Credit card number")]
         public string? CCNumber { get; set; }
-        [Required, RegularExpression(@"^[0-9]{2}\/[0-9]{2}$")]
+        [Required, RegularExpression(@"^[0-9]{2}\/[0-9]{2}$", ErrorMessage = "Invalid {0}.")]
         [Display(Name = "Expiration")]
         public string? CCExpiration{ get; set; }
-        [Required, RegularExpression("^[0-9]{3}$")]
+        [Required, RegularExpression("^[0-9]{3}$", ErrorMessage = "Invalid {0}.")]
         [Display(Name = "CVV")]
         public string? CCCvv { get; set; }
     }
