@@ -47,5 +47,9 @@ namespace Web.Controllers
 
             return RedirectToAction(nameof(Index));
         }
+        public async Task<IActionResult> Checkout()
+        {
+            return View();
+        }
     }
 }
