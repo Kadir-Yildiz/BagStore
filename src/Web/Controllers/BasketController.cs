@@ -49,7 +49,21 @@ namespace Web.Controllers
         }
         public async Task<IActionResult> Checkout()
         {
-            return View();
+            var vm = new CheckoutViewModel()
+            {
+                Basket = await _basketViewModelService.GetBasketViewModelAsync(),
+            };
+            return View(vm);
+        }
+        [HttpPost, ValidateAntiForgeryToken]
+        public async Task<IActionResult> Checkout(CheckoutViewModel vm)
+        {
+            if (ModelState.IsValid)
+            {
+                return RedirectToAction();
+            }
+            vm.Basket = await _basketViewModelService.GetBasketViewModelAsync();
+            return View(vm);
         }
     }
 }
